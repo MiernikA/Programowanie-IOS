@@ -12,8 +12,8 @@ final class CalculatorViewModel: ObservableObject {
     @Published var displayValue = "0"
 
     private var storedValue: Double?
-    private var isEnteringSecondNumber = false
     private var currentOperation: Operation?
+    private var isEnteringNewNumber = true
 
     enum Operation {
         case add, subtract, multiply, divide
@@ -26,75 +26,85 @@ final class CalculatorViewModel: ObservableObject {
             reset()
 
         case "+":
-            setOperation(.add)
+            applyOperation(.add)
 
         case "−":
-            setOperation(.subtract)
+            applyOperation(.subtract)
 
         case "×":
-            setOperation(.multiply)
+            applyOperation(.multiply)
 
         case "÷":
-            setOperation(.divide)
+            applyOperation(.divide)
 
         case "=":
-            calculateResult()
+            calculateIfPossible()
+            currentOperation = nil
 
         default:
             handleNumberInput(value)
         }
     }
 
-    private func setOperation(_ operation: Operation) {
-        storedValue = Double(displayValue)
-        currentOperation = operation
-        isEnteringSecondNumber = true
+
+    private func applyOperation(_ newOperation: Operation) {
+        calculateIfPossible()
+        currentOperation = newOperation
+        isEnteringNewNumber = true
     }
 
-    private func calculateResult() {
+    private func calculateIfPossible() {
         guard
+            let operation = currentOperation,
             let first = storedValue,
-            let second = Double(displayValue),
-            let operation = currentOperation
-        else { return }
-
-        let result: Double
-
-        switch operation {
-        case .add:
-            result = first + second
-        case .subtract:
-            result = first - second
-        case .multiply:
-            result = first * second
-        case .divide:
-            result = second == 0 ? 0 : first / second
+            let second = Double(displayValue)
+        else {
+            storedValue = Double(displayValue)
+            return
         }
 
+        let result = performOperation(first, second, operation)
         displayValue = format(result)
-        reset(keepDisplay: true)
+        storedValue = result
+    }
+
+    private func performOperation(
+        _ a: Double,
+        _ b: Double,
+        _ operation: Operation
+    ) -> Double {
+        switch operation {
+        case .add:
+            return a + b
+        case .subtract:
+            return a - b
+        case .multiply:
+            return a * b
+        case .divide:
+            return b == 0 ? 0 : a / b
+        }
     }
 
     private func handleNumberInput(_ value: String) {
-        if value.rangeOfCharacter(
+        guard value.rangeOfCharacter(
             from: CharacterSet.decimalDigits.union(CharacterSet(charactersIn: "."))
-        ) != nil {
-            if isEnteringSecondNumber {
-                displayValue = value
-                isEnteringSecondNumber = false
-            } else {
-                displayValue = displayValue == "0" ? value : displayValue + value
-            }
+        ) != nil else { return }
+
+        if isEnteringNewNumber {
+            displayValue = value
+            isEnteringNewNumber = false
+        } else {
+            displayValue = displayValue == "0"
+                ? value
+                : displayValue + value
         }
     }
 
-    private func reset(keepDisplay: Bool = false) {
-        if !keepDisplay {
-            displayValue = "0"
-        }
+    private func reset() {
+        displayValue = "0"
         storedValue = nil
         currentOperation = nil
-        isEnteringSecondNumber = false
+        isEnteringNewNumber = true
     }
 
     private func format(_ value: Double) -> String {
