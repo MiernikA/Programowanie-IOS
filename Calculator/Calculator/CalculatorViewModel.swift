@@ -16,36 +16,36 @@ final class CalculatorViewModel: ObservableObject {
     private var isEnteringNewNumber = true
 
     enum Operation {
-        case add, subtract, multiply, divide
+        case add, subtract, multiply, divide, power
     }
 
     func handleTap(_ value: String) {
         switch value {
-
         case "AC":
             reset()
-
         case "+":
             applyOperation(.add)
-
         case "−":
             applyOperation(.subtract)
-
         case "×":
             applyOperation(.multiply)
-
         case "÷":
             applyOperation(.divide)
-
+        case "xʸ":
+            applyOperation(.power)
+        case "%":
+            applyPercentage()
+        case "±":
+            toggleSign()
+        case "log":
+            applyLogarithm()
         case "=":
             calculateIfPossible()
             currentOperation = nil
-
         default:
             handleNumberInput(value)
         }
     }
-
 
     private func applyOperation(_ newOperation: Operation) {
         calculateIfPossible()
@@ -68,11 +68,7 @@ final class CalculatorViewModel: ObservableObject {
         storedValue = result
     }
 
-    private func performOperation(
-        _ a: Double,
-        _ b: Double,
-        _ operation: Operation
-    ) -> Double {
+    private func performOperation(_ a: Double, _ b: Double, _ operation: Operation) -> Double {
         switch operation {
         case .add:
             return a + b
@@ -82,7 +78,32 @@ final class CalculatorViewModel: ObservableObject {
             return a * b
         case .divide:
             return b == 0 ? 0 : a / b
+        case .power:
+            return pow(a, b)
         }
+    }
+
+    private func applyPercentage() {
+        guard let value = Double(displayValue) else { return }
+        let result = value / 100
+        displayValue = format(result)
+        storedValue = result
+        isEnteringNewNumber = true
+    }
+
+    private func toggleSign() {
+        guard let value = Double(displayValue) else { return }
+        let result = -value
+        displayValue = format(result)
+        storedValue = result
+    }
+
+    private func applyLogarithm() {
+        guard let value = Double(displayValue), value > 0 else { return }
+        let result = log10(value)
+        displayValue = format(result)
+        storedValue = result
+        isEnteringNewNumber = true
     }
 
     private func handleNumberInput(_ value: String) {
@@ -94,9 +115,8 @@ final class CalculatorViewModel: ObservableObject {
             displayValue = value
             isEnteringNewNumber = false
         } else {
-            displayValue = displayValue == "0"
-                ? value
-                : displayValue + value
+            if value == ".", displayValue.contains(".") { return }
+            displayValue = displayValue == "0" ? value : displayValue + value
         }
     }
 
