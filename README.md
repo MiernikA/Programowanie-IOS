@@ -22,6 +22,8 @@ https://github.com/MiernikA/Programowanie-IOS/commit/d3463f0ab24f8800e566c504711
 
 
 
+
+
 -------- Zadanie 2 --------
 
 ✅ 3.0 pkt : 
