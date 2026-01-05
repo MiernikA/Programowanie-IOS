@@ -7,26 +7,42 @@
 
 import SwiftUI
 
+struct Task {
+    let title: String
+    let imageName: String
+}
+
 struct ContentView: View {
     private let tasks = [
-        "Buy groceries",
-        "Learn SwiftUI",
-        "Finish the assignment",
-        "Go to the gym",
-        "Read a book"
+        Task(title: "Buy groceries", imageName: "groceries"),
+        Task(title: "Learn SwiftUI", imageName: "swift"),
+        Task(title: "Finish the assignment", imageName: "assignment"),
+        Task(title: "Go to the gym", imageName: "gym"),
+        Task(title: "Read a book", imageName: "book")
     ]
 
     var body: some View {
         NavigationStack {
-            List(tasks, id: \.self) { task in
-                Text(task)
+            List(tasks, id: \.title) { task in
+                HStack(spacing: 16) {
+                    Image(task.imageName)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 60, height: 60)
+
+                    Text(task.title)
+                        .font(.headline)
+
+                    Spacer()
+                }
+                .padding(.vertical, 12)
+                .listRowInsets(
+                    EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16)
+                )
             }
-            .navigationTitle("Tasks List")
+            .listStyle(.plain)
+            .navigationTitle("Task List")
         }
     }
-}
-
-#Preview {
-    ContentView()
 }
 
