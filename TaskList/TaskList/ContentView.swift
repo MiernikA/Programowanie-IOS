@@ -7,43 +7,60 @@
 
 import SwiftUI
 
-struct Task {
+struct Task: Identifiable {
+    let id = UUID()
     let title: String
     let imageName: String
+    var isDone: Bool
 }
 
 struct ContentView: View {
 
     @State private var tasks = [
-        Task(title: "Buy groceries", imageName: "groceries"),
-        Task(title: "Learn SwiftUI", imageName: "swift"),
-        Task(title: "Finish the assignment", imageName: "assignment"),
-        Task(title: "Go to the gym", imageName: "gym"),
-        Task(title: "Read a book", imageName: "book")
+        Task(title: "Buy groceries", imageName: "groceries", isDone: false),
+        Task(title: "Learn SwiftUI", imageName: "swift", isDone: false),
+        Task(title: "Finish the assignment", imageName: "assignment", isDone: false),
+        Task(title: "Go to the gym", imageName: "gym", isDone: false),
+        Task(title: "Read a book", imageName: "book", isDone: false)
     ]
 
     var body: some View {
         NavigationStack {
             List {
-                ForEach(tasks, id: \.title) { task in
-                    HStack(spacing: 14) {
+                ForEach($tasks) { $task in
+                    HStack(spacing: 16) {
 
                         Image(task.imageName)
                             .resizable()
                             .scaledToFit()
-                            .frame(width: 42, height: 42)
-                            .padding(8)
-                            .background(Color(.systemGray6))
-                            .clipShape(RoundedRectangle(cornerRadius: 12))
+                            .frame(width: 60, height: 60)
+                            .opacity(task.isDone ? 0.4 : 1)
 
-                        Text(task.title)
-                            .font(.system(size: 17, weight: .medium))
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text(task.title)
+                                .font(.headline)
+                                .strikethrough(task.isDone)
+                                .foregroundColor(task.isDone ? .gray : .primary)
+
+                            Text(task.isDone ? "Done" : "Not done")
+                                .font(.caption)
+                                .foregroundColor(task.isDone ? .green : .red)
+                        }
 
                         Spacer()
+
+                        Image(systemName: "checkmark.circle.fill")
+                            .foregroundColor(task.isDone ? .green : .gray)
+                            .opacity(task.isDone ? 1 : 0)
                     }
-                    .padding(.vertical, 6)
+                    .padding(.vertical, 12)
+                    .contentShape(Rectangle())
+                    .onTapGesture {
+                        task.isDone.toggle()
+                    }
                 }
                 .onDelete(perform: deleteTask)
+                .onMove(perform: moveTask)
             }
             .listStyle(.plain)
             .navigationTitle("Task List")
@@ -52,5 +69,9 @@ struct ContentView: View {
 
     private func deleteTask(at offsets: IndexSet) {
         tasks.remove(atOffsets: offsets)
+    }
+
+    private func moveTask(from source: IndexSet, to destination: Int) {
+        tasks.move(fromOffsets: source, toOffset: destination)
     }
 }
