@@ -13,9 +13,10 @@ struct Task {
 }
 
 struct ContentView: View {
-    private let tasks = [
+
+    @State private var tasks = [
         Task(title: "Buy groceries", imageName: "groceries"),
-        Task(title: "Learn SwiftUI", imageName: "swift"),
+        Task(title: "Learn SwiftUI", imageName: "swiftui"),
         Task(title: "Finish the assignment", imageName: "assignment"),
         Task(title: "Go to the gym", imageName: "gym"),
         Task(title: "Read a book", imageName: "book")
@@ -23,26 +24,31 @@ struct ContentView: View {
 
     var body: some View {
         NavigationStack {
-            List(tasks, id: \.title) { task in
-                HStack(spacing: 16) {
-                    Image(task.imageName)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 60, height: 60)
+            List {
+                ForEach(tasks, id: \.title) { task in
+                    HStack(spacing: 16) {
+                        Image(task.imageName)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 60, height: 60)
 
-                    Text(task.title)
-                        .font(.headline)
+                        Text(task.title)
+                            .font(.headline)
 
-                    Spacer()
+                        Spacer()
+                    }
+                    .padding(.vertical, 12)
                 }
-                .padding(.vertical, 12)
-                .listRowInsets(
-                    EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16)
-                )
+                .onDelete(perform: deleteTask)
             }
             .listStyle(.plain)
             .navigationTitle("Task List")
         }
     }
+
+    private func deleteTask(at offsets: IndexSet) {
+        tasks.remove(atOffsets: offsets)
+    }
 }
+
 
