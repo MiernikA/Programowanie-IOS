@@ -20,9 +20,11 @@ https://github.com/MiernikA/Programowanie-IOS/commit/d3463f0ab24f8800e566c504711
 
 ✅ 5.0 pkt : Apliakcja od początku była skalowalna
 
+<pre> 
 
 
 
+</pre>
 
 -------- Zadanie 2 --------
 
