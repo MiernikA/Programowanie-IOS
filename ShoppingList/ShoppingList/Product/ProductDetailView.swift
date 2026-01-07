@@ -10,6 +10,8 @@ import SwiftUI
 struct ProductDetailView: View {
 
     let product: Product
+    @EnvironmentObject var cart: CartViewModel
+    @State private var showAddedAlert = false
 
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
@@ -24,11 +26,22 @@ struct ProductDetailView: View {
             Divider()
 
             Text(product.details ?? "No description available.")
-                .font(.body)
+
+            Button("Add to cart") {
+                cart.add(product: product)
+                showAddedAlert = true
+            }
+            .buttonStyle(.borderedProminent)
 
             Spacer()
         }
         .padding()
         .navigationTitle("Details")
+        .alert("Added to cart", isPresented: $showAddedAlert) {
+            Button("OK", role: .cancel) {}
+        } message: {
+            Text("\(product.name ?? "") has been added to the cart.")
+        }
     }
 }
+
