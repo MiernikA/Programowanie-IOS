@@ -8,11 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		754D5B6B2F0ECEA700968346 /* api.py in Resources */ = {isa = PBXBuildFile; fileRef = 754D5B6A2F0ECE9D00968346 /* api.py */; };
+		754D5B802F1005DD00968346 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 754D5B7E2F1005DD00968346 /* Model.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		754D5B5C2F0ECE8900968346 /* ServerApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ServerApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		754D5B6A2F0ECE9D00968346 /* api.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = api.py; sourceTree = "<group>"; };
+		754D5B7F2F1005DD00968346 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -37,6 +39,7 @@
 		754D5B532F0ECE8900968346 = {
 			isa = PBXGroup;
 			children = (
+				754D5B7E2F1005DD00968346 /* Model.xcdatamodeld */,
 				754D5B6A2F0ECE9D00968346 /* api.py */,
 				754D5B5E2F0ECE8900968346 /* ServerApp */,
 				754D5B5D2F0ECE8900968346 /* Products */,
@@ -126,6 +129,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				754D5B802F1005DD00968346 /* Model.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -352,6 +356,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		754D5B7E2F1005DD00968346 /* Model.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				754D5B7F2F1005DD00968346 /* Model.xcdatamodel */,
+			);
+			currentVersion = 754D5B7F2F1005DD00968346 /* Model.xcdatamodel */;
+			path = Model.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 754D5B542F0ECE8900968346 /* Project object */;
 }
