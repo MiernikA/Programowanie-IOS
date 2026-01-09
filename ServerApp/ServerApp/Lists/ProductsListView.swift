@@ -10,6 +10,11 @@ import CoreData
 
 struct ProductsListView: View {
 
+    @Environment(\.managedObjectContext)
+    private var context
+
+    @State private var showAddProduct = false
+
     @FetchRequest(
         sortDescriptors: [
             NSSortDescriptor(keyPath: \ProductEntity.name, ascending: true)
@@ -24,18 +29,36 @@ struct ProductsListView: View {
                 VStack(alignment: .leading) {
                     Text(product.name ?? "—")
                         .font(.headline)
-
                     Text("Price: \(product.price)")
                         .font(.subheadline)
                         .foregroundColor(.secondary)
-
-                    Text("Category ID: \(product.categoryId)")
-                        .font(.caption)
-                        .foregroundColor(.gray)
                 }
-                .padding(.vertical, 4)
             }
             .navigationTitle("Products")
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {
+                        showAddProduct = true
+                    } label: {
+                        Text("+")
+                            .font(.title2)
+                    }
+                }
+            }
+            .sheet(isPresented: $showAddProduct) {
+                AddProductView {
+                    await reloadProducts()
+                }
+            }
+        }
+    }
+
+    private func reloadProducts() async {
+        do {
+            let products = try await APIService.shared.fetchProducts()
+            try saveProducts(products, context: context)
+        } catch {
+            print("❌ Reload error:", error)
         }
     }
 }
