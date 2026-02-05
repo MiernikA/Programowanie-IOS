@@ -41,6 +41,7 @@ https://github.com/MiernikA/Programowanie-IOS/commit/7434f164c288671f6dd4e0d0aad
 
 https://github.com/MiernikA/Programowanie-IOS/commit/0745532b718fb3c513981e31da17b0b635275ddd
 
+<br/><br/>
 
 -------- Zadanie 3 --------
 
@@ -60,6 +61,7 @@ https://github.com/MiernikA/Programowanie-IOS/commit/a2902bea980774a6286031f83d4
 
 https://github.com/MiernikA/Programowanie-IOS/commit/8eb0b71d06f7622cf1aa2885bceb189422a0cbe2
 
+<br/><br/>
 
 -------- Zadanie 4 --------
 
