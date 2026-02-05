@@ -79,6 +79,44 @@ https://github.com/MiernikA/Programowanie-IOS/commit/7b40505b439293f7abd476ec46d
 
 https://github.com/MiernikA/Programowanie-IOS/commit/79e93ffa925ecb696242ebde9e11ff191d6ef192
 
+<br/><br/>
+
+-------- Zadanie 5 --------
+
+✅ 3.0 i 3.5 pkt : 
+
+https://github.com/MiernikA/Programowanie-IOS/commit/2b67f6b8ead15ecf185b417da012a58bcee20a4a
+
+❌ 4.0 pkt
+
+❌ 4.5 pkt
+
+❌ 5.0 pkt
+
+<br/><br/>
+
+-------- Zadanie 6 --------
+
+✅ 3.0 i 3.5 i 4.0 pkt : 
+
+https://github.com/MiernikA/Programowanie-IOS/commit/44725a188b229267f1b4adf630990552b7a41bdd
+
+❌ 4.5 pkt
+
+❌ 5.0 pkt
+
+<br/><br/>
+
+-------- Zadanie 7 --------
+
+✅ 3.0 i 3.5 i 4.0 i 4.5 pkt : 
+
+https://github.com/MiernikA/Programowanie-IOS/commit/5cc668ae2944d7a90ad59797aaa5c2c101c76f35
+
+❌ 5.0 pkt
+
+
+
 
 
 
